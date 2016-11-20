@@ -2,6 +2,8 @@
 
 namespace Adaojunior\Passport;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Passport\Bridge\User as UserEntity;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
@@ -68,6 +70,11 @@ class SocialGrant extends AbstractGrant
             $this->getParameter('network', $request),
             $this->getParameter('access_token', $request)
         );
+
+        if($user instanceof Authenticatable)
+        {
+            $user = new UserEntity($user->getAuthIdentifier());
+        }
 
         if ($user instanceof UserEntityInterface === false) {
             $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
