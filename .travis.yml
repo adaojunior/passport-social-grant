@@ -1,0 +1,18 @@
+language: php
+
+sudo: false
+
+cache:
+  directories:
+  - vendor
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+
+install:
+  - travis_retry composer install --no-interaction --prefer-source
+
+script:
+  - vendor/bin/phpunit
