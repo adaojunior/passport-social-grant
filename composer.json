@@ -1,0 +1,31 @@
+{
+    "name": "adaojunior/passport-social-grant",
+    "description": "Social guard for Laravel Passport",
+    "type": "library",
+    "keywords": [
+        "oauth",
+        "guard",
+        "social",
+        "laravel",
+        "passport"
+    ],
+    "homepage": "https://github.com/adaojunior/passport-social-grant",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adão Júnior",
+            "email": "itsjunnior@gmail.com",
+            "homepage": "https://github.com/adaojunior",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Adaojunior\\Passport\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.6.4",
+        "laravel/passport": "^1.0"
+    }
+}
