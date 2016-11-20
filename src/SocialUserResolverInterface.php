@@ -5,5 +5,12 @@ namespace Adaojunior\Passport;
 
 interface SocialUserResolverInterface
 {
-    public function resolve(string $network, string $accessToken);
+    /**
+     * Resolves user by given network and access token.
+     *
+     * @param string $network
+     * @param string $accessToken
+     * @return mixed
+     */
+    public function resolve($network, $accessToken);
 }

@@ -24,7 +24,7 @@ class SocialGrant extends AbstractGrant
         $this->refreshTokenTTL = new \DateInterval('P1M');
     }
 
-    public function getIdentifier() : string
+    public function getIdentifier()
     {
         return 'social';
     }
