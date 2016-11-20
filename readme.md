@@ -29,6 +29,14 @@ use Adaojunior\Passport\SocialUserResolverInterface;
 
 class SocialUserResolver implements SocialUserResolverInterface
 {
+
+    /**
+     * Resolves user by given network and access token.
+     *
+     * @param string $network
+     * @param string $accessToken
+     * @return \Illuminate\Contracts\Auth\Authenticatable
+     */
     public function resolve($network, $accessToken)
     {
         switch ($network) {
@@ -42,6 +50,12 @@ class SocialUserResolver implements SocialUserResolverInterface
     }
     
     
+    /**
+     * Resolves user by facebook access token.
+     *
+     * @param string $accessToken
+     * @return \App\User
+     */
     protected function authWithFacebook($accessToken)
     {
         ...
