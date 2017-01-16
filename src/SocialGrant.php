@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class SocialGrant extends AbstractGrant
 {
-    /** @var  SocialUserResolverInterface */
+    /** @var SocialUserResolverInterface */
     protected $resolver;
 
     public function __construct(
@@ -61,8 +61,10 @@ class SocialGrant extends AbstractGrant
 
     /**
      * @param ServerRequestInterface $request
-     * @return UserEntityInterface
+     *
      * @throws OAuthServerException
+     *
+     * @return UserEntityInterface
      */
     protected function validateUser(ServerRequestInterface $request)
     {
@@ -71,8 +73,7 @@ class SocialGrant extends AbstractGrant
             $this->getParameter('access_token', $request)
         );
 
-        if($user instanceof Authenticatable)
-        {
+        if ($user instanceof Authenticatable) {
             $user = new UserEntity($user->getAuthIdentifier());
         }
 
