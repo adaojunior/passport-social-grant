@@ -26,6 +26,6 @@
     },
     "require": {
         "php": ">=5.6.4",
-        "laravel/passport": "^1.0"
+        "laravel/passport": "^2.0"
     }
 }
