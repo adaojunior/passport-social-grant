@@ -68,7 +68,8 @@ class SocialGrant extends AbstractGrant
     {
         $user = $this->resolver->resolve(
             $this->getParameter('network', $request),
-            $this->getParameter('access_token', $request)
+            $this->getParameter('access_token', $request),
+            $this->getParameter('access_token_secret', $request, false)
         );
 
         if($user instanceof Authenticatable)
@@ -84,11 +85,11 @@ class SocialGrant extends AbstractGrant
         return $user;
     }
 
-    protected function getParameter($param, ServerRequestInterface $request)
+    protected function getParameter($param, ServerRequestInterface $request, $required = true)
     {
         $value = $this->getRequestParameter($param, $request);
 
-        if (is_null($value)) {
+        if (is_null($value) && $required) {
             throw OAuthServerException::invalidRequest($param);
         }
 
