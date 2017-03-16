@@ -43,7 +43,7 @@ class SocialUserResolver implements SocialUserResolverInterface
      * @param string $accessToken
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */
-    public function resolve($network, $accessToken)
+    public function resolve($network, $accessToken, , $accessTokenSecret = null)
     {
         switch ($network) {
             case 'facebook':
