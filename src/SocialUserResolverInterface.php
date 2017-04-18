@@ -10,7 +10,8 @@ interface SocialUserResolverInterface
      *
      * @param string $network
      * @param string $accessToken
+     * @param string|null $accessTokenSecret
      * @return mixed
      */
-    public function resolve($network, $accessToken);
+    public function resolve($network, $accessToken, $accessTokenSecret = null);
 }
