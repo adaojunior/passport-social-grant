@@ -11,3 +11,7 @@
 ## v2.0-beta.0
 
 - Supports passport 2.0
+
+## v3.0
+
+- Supports passport 3.0
