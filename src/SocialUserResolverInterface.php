@@ -2,6 +2,7 @@
 
 namespace Adaojunior\Passport;
 
+use Closure;
 
 interface SocialUserResolverInterface
 {
@@ -11,7 +12,8 @@ interface SocialUserResolverInterface
      * @param string $network
      * @param string $accessToken
      * @param string|null $accessTokenSecret
+     * @param Closure $getRequestParam
      * @return mixed
      */
-    public function resolve($network, $accessToken, $accessTokenSecret = null);
+    public function resolve($network, $accessToken, $accessTokenSecret = null, Closure $getRequestParam);
 }
