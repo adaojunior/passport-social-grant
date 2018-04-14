@@ -33,6 +33,7 @@ You must also implement `Adaojunior\Passport\SocialUserResolverInterface`:
 
 use Adaojunior\Passport\SocialGrantException;
 use Adaojunior\Passport\SocialUserResolverInterface;
+use Closure;
 
 class SocialUserResolver implements SocialUserResolverInterface
 {
@@ -44,7 +45,7 @@ class SocialUserResolver implements SocialUserResolverInterface
      * @param string $accessToken
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */
-    public function resolve($network, $accessToken, $accessTokenSecret = null)
+    public function resolve($network, $accessToken, $accessTokenSecret = null, Closure $getRequestParam)
     {
         switch ($network) {
             case 'facebook':
