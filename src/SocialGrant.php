@@ -95,7 +95,7 @@ class SocialGrant extends AbstractGrant
            return function($param) use ($request)
            {
                return $this->getRequestParameter($param, $request);
-           }
+           };
     }
 
     protected function getParameter($param, ServerRequestInterface $request, $required = true)
