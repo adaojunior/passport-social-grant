@@ -15,5 +15,5 @@ interface SocialUserResolverInterface
      * @param Closure $getRequestParam
      * @return mixed
      */
-    public function resolve($network, $accessToken, $accessTokenSecret = null, Closure $getRequestParam);
+    public function resolve($network, $accessToken, $accessTokenSecret = null, Closure $getParam);
 }
