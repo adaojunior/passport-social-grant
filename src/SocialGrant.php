@@ -94,7 +94,7 @@ class SocialGrant extends AbstractGrant
     {
            return function($param) use ($request)
            {
-               return $this->getParameter($param, $request);
+               return $this->getRequestParameter($param, $request);
            }
     }
 
