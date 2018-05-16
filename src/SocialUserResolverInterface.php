@@ -2,7 +2,6 @@
 
 namespace Adaojunior\Passport;
 
-
 interface SocialUserResolverInterface
 {
     /**
