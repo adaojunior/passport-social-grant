@@ -20,5 +20,5 @@ return [
     | Define the implementation of Adaojunior\Passport\SocialGrantAccessTokenResolver.
     |
     */
-    'access_token' => null
+    'access_token' => null,
 ];
