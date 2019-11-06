@@ -39,21 +39,25 @@ class SocialGrant extends AbstractGrant
         // Validate request
         $client = $this->validateClient($request);
 
-        $scopes = $this->validateScopes($this->getRequestParameter('scope', $request));
+        $scopes = $this->validateScopes($this->getRequestParameter('scope', $request), $this->defaultScope);
 
         $user = $this->validateUser($request);
 
         // Finalize the requested scopes
         $scopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier());
 
-        // Issue and persist new tokens
+        // Issue and persist new access token
         $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $user->getIdentifier(), $scopes);
+        $this->getEmitter()->emit(new RequestEvent(RequestEvent::ACCESS_TOKEN_ISSUED, $request));
+        $responseType->setAccessToken($accessToken);
 
+        // Issue and persist new refresh token if given
         $refreshToken = $this->issueRefreshToken($accessToken);
 
-        // Inject tokens into response
-        $responseType->setAccessToken($accessToken);
-        $responseType->setRefreshToken($refreshToken);
+        if ($refreshToken !== null) {
+            $this->getEmitter()->emit(new RequestEvent(RequestEvent::REFRESH_TOKEN_ISSUED, $request));
+            $responseType->setRefreshToken($refreshToken);
+        }
 
         return $responseType;
     }
