@@ -5,6 +5,7 @@ namespace Adaojunior\Passport;
 use DateInterval;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Bridge\User as UserEntity;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
@@ -41,7 +42,7 @@ class SocialGrant extends AbstractGrant
 
         $scopes = $this->validateScopes($this->getRequestParameter('scope', $request), $this->defaultScope);
 
-        $user = $this->validateUser($request);
+        $user = $this->validateUser($request, $client);
 
         // Finalize the requested scopes
         $scopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier());
@@ -64,16 +65,18 @@ class SocialGrant extends AbstractGrant
 
     /**
      * @param ServerRequestInterface $request
+     * @param ClientEntityInterface $client
      * @return UserEntityInterface
      * @throws OAuthServerException
      */
-    protected function validateUser(ServerRequestInterface $request)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
         $type = $this->getType($request);
 
         $user = $this->getResolver($type)->resolve(
             $this->getParameter('network', $request),
-            $this->getParameter($type, $request)
+            $this->getParameter($type, $request),
+            $client
         );
 
         if ($user instanceof Authenticatable) {
