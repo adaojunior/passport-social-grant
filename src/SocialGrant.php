@@ -19,7 +19,8 @@ class SocialGrant extends AbstractGrant
 
     const ACCESS_TOKEN = 'access_token';
 
-    public function __construct(RefreshTokenRepositoryInterface $refreshTokenRepository) {
+    public function __construct(RefreshTokenRepositoryInterface $refreshTokenRepository)
+    {
         $this->setRefreshTokenRepository($refreshTokenRepository);
         $this->refreshTokenTTL = new DateInterval('P1M');
     }
@@ -71,7 +72,7 @@ class SocialGrant extends AbstractGrant
             $this->getParameter($type, $request)
         );
 
-        if($user instanceof Authenticatable) {
+        if ($user instanceof Authenticatable) {
             $user = new UserEntity($user->getAuthIdentifier());
         }
 
@@ -93,10 +94,11 @@ class SocialGrant extends AbstractGrant
 
         $resolver = app($class);
 
-        if($type === self::CODE && $resolver instanceof SocialGrantCodeResolver)
+        if ($type === self::CODE && $resolver instanceof SocialGrantCodeResolver) {
             return $resolver;
-        elseif ($type === self::ACCESS_TOKEN && $resolver instanceof SocialGrantAccessTokenResolver)
+        } elseif ($type === self::ACCESS_TOKEN && $resolver instanceof SocialGrantAccessTokenResolver) {
             return $resolver;
+        }
 
         throw SocialGrantException::serverError("Missing implementation of $type");
     }
@@ -114,7 +116,7 @@ class SocialGrant extends AbstractGrant
 
     protected function isTypeEnabled(string $type)
     {
-        return !is_null(config("social-grant.$type"));
+        return ! is_null(config("social-grant.$type"));
     }
 
     public function isValidType($type)
