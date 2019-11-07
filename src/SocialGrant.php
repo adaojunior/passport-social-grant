@@ -82,7 +82,7 @@ class SocialGrant extends AbstractGrant
 
         if ($user instanceof UserEntityInterface === false) {
             $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
-            throw OAuthServerException::invalidCredentials();
+            throw OAuthServerException::invalidGrant();
         }
 
         return $user;
