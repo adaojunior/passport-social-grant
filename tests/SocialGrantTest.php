@@ -46,7 +46,7 @@ class SocialGrantTest extends TestCase
         $accessTokenRepositoryMock->method('persistNewAccessToken')->willReturnSelf();
         $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
         $userEntity = new UserEntity();
-        $resolverMock->method('resolve')->willReturn($userEntity);
+        $resolverMock->method('retrieveByAccessToken')->willReturn($userEntity);
         $refreshTokenRepositoryMock = $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock();
         $refreshTokenRepositoryMock->method('persistNewRefreshToken')->willReturnSelf();
         $refreshTokenRepositoryMock->method('getNewRefreshToken')->willReturn(new RefreshTokenEntity());
@@ -84,7 +84,7 @@ class SocialGrantTest extends TestCase
         $accessTokenRepositoryMock->method('persistNewAccessToken')->willReturnSelf();
         $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
         $userEntity = new UserEntity();
-        $resolverMock->method('resolve')->willReturn($userEntity);
+        $resolverMock->method('retrieveByAccessToken')->willReturn($userEntity);
         $scope = new ScopeEntity();
         $scopeRepositoryMock = $this->getMockBuilder(ScopeRepositoryInterface::class)->getMock();
         $scopeRepositoryMock->method('getScopeEntityByIdentifier')->willReturn($scope);
@@ -157,7 +157,7 @@ class SocialGrantTest extends TestCase
         $clientRepositoryMock->method('getClientEntity')->willReturn($client);
         $accessTokenRepositoryMock = $this->getMockBuilder(AccessTokenRepositoryInterface::class)->getMock();
         $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
-        $resolverMock->method('resolve')->willReturn(null);
+        $resolverMock->method('retrieveByAccessToken')->willReturn(null);
         $refreshTokenRepositoryMock = $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock();
         $grant = new SocialGrant($resolverMock, $refreshTokenRepositoryMock);
         $grant->setClientRepository($clientRepositoryMock);

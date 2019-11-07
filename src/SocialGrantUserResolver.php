@@ -14,5 +14,5 @@ interface SocialGrantUserResolver
      * @param ClientEntityInterface $client
      * @return mixed
      */
-    public function resolve(string $provider, string $accessToken, ClientEntityInterface $client);
+    public function retrieveByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client);
 }
