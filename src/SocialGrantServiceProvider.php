@@ -20,6 +20,7 @@ class SocialGrantServiceProvider extends ServiceProvider
     protected function makeGrant()
     {
         $grant = new SocialGrant(
+            $this->app->make(SocialGrantUserResolver::class),
             $this->app->make(RefreshTokenRepository::class)
         );
 
