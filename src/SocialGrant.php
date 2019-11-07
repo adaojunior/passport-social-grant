@@ -71,7 +71,7 @@ class SocialGrant extends AbstractGrant
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
         $user = $this->resolver->resolve(
-            $this->getParameter('network', $request),
+            $this->getParameter('provider', $request),
             $this->getParameter('access_token', $request),
             $client
         );
