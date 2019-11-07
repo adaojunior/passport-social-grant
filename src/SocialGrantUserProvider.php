@@ -2,7 +2,7 @@
 
 namespace Adaojunior\PassportSocialGrant;
 
-use League\OAuth2\Server\Entities\UserEntityInterface;
+use Illuminate\Contracts\Auth\Authenticatable;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 
 interface SocialGrantUserProvider
@@ -13,7 +13,7 @@ interface SocialGrantUserProvider
      * @param string $provider
      * @param string $accessToken
      * @param ClientEntityInterface $client
-     * @return UserEntityInterface|null
+     * @return Authenticatable|null
      */
-    public function getUserEntityByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? UserEntityInterface;
+    public function getUserEntityByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? Authenticatable;
 }

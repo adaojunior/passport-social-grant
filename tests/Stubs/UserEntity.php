@@ -2,15 +2,20 @@
 
 namespace Adaojunior\SocialGrant\Tests\Stubs;
 
-use League\OAuth2\Server\Entities\Traits\EntityTrait;
-use League\OAuth2\Server\Entities\UserEntityInterface;
+use Illuminate\Auth;
+use Illuminate\Contracts\Auth\Authenticatable;
 
-class UserEntity implements UserEntityInterface
+
+class UserEntity implements Authenticatable
 {
-    use EntityTrait;
+    use Auth\Authenticatable;
 
-    public function __construct()
+    protected $id = 1;
+
+    protected $password = 'password';
+
+    private function getKeyName()
     {
-        $this->setIdentifier(123);
+        return 'id';
     }
 }
