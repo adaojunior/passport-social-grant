@@ -21,10 +21,9 @@ The package will automatically register its service provider. Or you may manuall
 
 ## Setup
 
-1. Implement `SocialGrantUserProvider` interface:
+1. Implement the `SocialGrantUserProvider` interface:
 
 ```php
-
 <?php
 namespace App\SocialGrant;
 
@@ -44,10 +43,8 @@ class UserProvider implements SocialGrantUserProvider
 2. Bind `SocialGrantUserProvider` interface to your implementation in the `register` method of your application service provider `app/Providers/AppServiceProvider.php`:
 
 ```php
-
 $this->app->bind(
     Adaojunior\PassportSocialGrant\SocialGrantUserProvider::class,
     App\SocialGrant\UserProvider::class
 );
-
 ```
