@@ -30,6 +30,14 @@ class SocialGrant extends AbstractGrant
         return 'social';
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseTypeInterface $responseType
+     * @param DateInterval $accessTokenTTL
+     * @return ResponseTypeInterface
+     * @throws OAuthServerException
+     * @throws \League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException
+     */
     public function respondToAccessTokenRequest(
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
@@ -88,6 +96,13 @@ class SocialGrant extends AbstractGrant
         return $user;
     }
 
+    /**
+     * @param $param
+     * @param ServerRequestInterface $request
+     * @param bool $required
+     * @return string|null
+     * @throws OAuthServerException
+     */
     protected function getParameter($param, ServerRequestInterface $request, $required = true)
     {
         $value = $this->getRequestParameter($param, $request);
