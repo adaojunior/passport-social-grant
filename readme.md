@@ -25,6 +25,7 @@ The package will automatically register its service provider. Or you may manuall
 
 ```php
 <?php
+
 namespace App\SocialGrant;
 
 use Illuminate\Contracts\Auth\Authenticatable;
