@@ -1,6 +1,6 @@
 <?php
 
-namespace Adaojunior\Passport;
+namespace Adaojunior\PassportSocialGrant;
 
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;

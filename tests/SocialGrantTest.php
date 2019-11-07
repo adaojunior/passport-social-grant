@@ -2,8 +2,8 @@
 
 namespace Adaojunior\SocialGrant\Tests;
 
-use Adaojunior\Passport\SocialGrant;
-use Adaojunior\Passport\SocialGrantUserProvider;
+use Adaojunior\PassportSocialGrant\SocialGrant;
+use Adaojunior\PassportSocialGrant\SocialGrantUserProvider;
 use Adaojunior\SocialGrant\Tests\Stubs\AccessTokenEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\ClientEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\RefreshTokenEntity;

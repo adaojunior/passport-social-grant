@@ -1,6 +1,6 @@
 <?php
 
-namespace Adaojunior\Passport;
+namespace Adaojunior\PassportSocialGrant;
 
 use DateInterval;
 use Illuminate\Contracts\Auth\Authenticatable;

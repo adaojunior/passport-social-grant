@@ -21,12 +21,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Adaojunior\\Passport\\": "src/"
+            "Adaojunior\\PassportSocialGrant\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Adaojunior\\SocialGrant\\Tests\\": "tests/"
+            "Adaojunior\\PassportSocialGrant\\Tests\\": "tests/"
         }
     },
     "require": {

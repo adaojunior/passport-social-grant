@@ -1,6 +1,6 @@
 <?php
 
-namespace Adaojunior\Passport;
+namespace Adaojunior\PassportSocialGrant;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
 
