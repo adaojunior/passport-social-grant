@@ -16,11 +16,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class SocialGrant extends AbstractGrant
 {
-    private $resolver;
+    private $provider;
 
-    public function __construct(SocialGrantUserProvider $resolver, RefreshTokenRepositoryInterface $refreshTokenRepository)
+    public function __construct(SocialGrantUserProvider $provider, RefreshTokenRepositoryInterface $refreshTokenRepository)
     {
-        $this->resolver = $resolver;
+        $this->provider = $provider;
         $this->setRefreshTokenRepository($refreshTokenRepository);
         $this->refreshTokenTTL = new DateInterval('P1M');
     }
@@ -78,7 +78,7 @@ class SocialGrant extends AbstractGrant
      */
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
-        $user = $this->resolver->retrieveByAccessToken(
+        $user = $this->provider->retrieveByAccessToken(
             $this->getParameter('provider', $request),
             $this->getParameter('access_token', $request),
             $client
