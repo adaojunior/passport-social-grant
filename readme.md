@@ -32,7 +32,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Adaojunior\PassportSocialGrant\SocialGrantUserProvider;
 
-class SocialUserResolver implements SocialGrantUserProvider
+class UserProvider implements SocialGrantUserProvider
 {
     public function getUserByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? Authenticatable
     {
