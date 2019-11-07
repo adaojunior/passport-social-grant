@@ -3,7 +3,7 @@
 namespace Adaojunior\SocialGrant\Tests;
 
 use Adaojunior\Passport\SocialGrant;
-use Adaojunior\Passport\SocialGrantUserResolver;
+use Adaojunior\Passport\SocialGrantUserProvider;
 use Adaojunior\SocialGrant\Tests\Stubs\AccessTokenEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\ClientEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\RefreshTokenEntity;
@@ -29,7 +29,7 @@ class SocialGrantTest extends TestCase
     public function testGetIdentifier()
     {
         $grant = new SocialGrant(
-            $this->getMockBuilder(SocialGrantUserResolver::class)->getMock(),
+            $this->getMockBuilder(SocialGrantUserProvider::class)->getMock(),
             $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock()
         );
 
@@ -44,7 +44,7 @@ class SocialGrantTest extends TestCase
         $accessTokenRepositoryMock = $this->getMockBuilder(AccessTokenRepositoryInterface::class)->getMock();
         $accessTokenRepositoryMock->method('getNewToken')->willReturn(new AccessTokenEntity());
         $accessTokenRepositoryMock->method('persistNewAccessToken')->willReturnSelf();
-        $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
+        $resolverMock = $this->getMockBuilder(SocialGrantUserProvider::class)->getMock();
         $userEntity = new UserEntity();
         $resolverMock->method('retrieveByAccessToken')->willReturn($userEntity);
         $refreshTokenRepositoryMock = $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock();
@@ -82,7 +82,7 @@ class SocialGrantTest extends TestCase
         $accessTokenRepositoryMock = $this->getMockBuilder(AccessTokenRepositoryInterface::class)->getMock();
         $accessTokenRepositoryMock->method('getNewToken')->willReturn(new AccessTokenEntity());
         $accessTokenRepositoryMock->method('persistNewAccessToken')->willReturnSelf();
-        $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
+        $resolverMock = $this->getMockBuilder(SocialGrantUserProvider::class)->getMock();
         $userEntity = new UserEntity();
         $resolverMock->method('retrieveByAccessToken')->willReturn($userEntity);
         $scope = new ScopeEntity();
@@ -115,7 +115,7 @@ class SocialGrantTest extends TestCase
         $clientRepositoryMock = $this->getMockBuilder(ClientRepositoryInterface::class)->getMock();
         $clientRepositoryMock->method('getClientEntity')->willReturn($client);
         $accessTokenRepositoryMock = $this->getMockBuilder(AccessTokenRepositoryInterface::class)->getMock();
-        $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
+        $resolverMock = $this->getMockBuilder(SocialGrantUserProvider::class)->getMock();
         $refreshTokenRepositoryMock = $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock();
         $grant = new SocialGrant($resolverMock, $refreshTokenRepositoryMock);
         $grant->setClientRepository($clientRepositoryMock);
@@ -135,7 +135,7 @@ class SocialGrantTest extends TestCase
         $clientRepositoryMock = $this->getMockBuilder(ClientRepositoryInterface::class)->getMock();
         $clientRepositoryMock->method('getClientEntity')->willReturn($client);
         $accessTokenRepositoryMock = $this->getMockBuilder(AccessTokenRepositoryInterface::class)->getMock();
-        $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
+        $resolverMock = $this->getMockBuilder(SocialGrantUserProvider::class)->getMock();
         $refreshTokenRepositoryMock = $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock();
         $grant = new SocialGrant($resolverMock, $refreshTokenRepositoryMock);
         $grant->setClientRepository($clientRepositoryMock);
@@ -156,7 +156,7 @@ class SocialGrantTest extends TestCase
         $clientRepositoryMock = $this->getMockBuilder(ClientRepositoryInterface::class)->getMock();
         $clientRepositoryMock->method('getClientEntity')->willReturn($client);
         $accessTokenRepositoryMock = $this->getMockBuilder(AccessTokenRepositoryInterface::class)->getMock();
-        $resolverMock = $this->getMockBuilder(SocialGrantUserResolver::class)->getMock();
+        $resolverMock = $this->getMockBuilder(SocialGrantUserProvider::class)->getMock();
         $resolverMock->method('retrieveByAccessToken')->willReturn(null);
         $refreshTokenRepositoryMock = $this->getMockBuilder(RefreshTokenRepositoryInterface::class)->getMock();
         $grant = new SocialGrant($resolverMock, $refreshTokenRepositoryMock);

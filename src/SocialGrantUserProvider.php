@@ -4,10 +4,10 @@ namespace Adaojunior\Passport;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 
-interface SocialGrantUserResolver
+interface SocialGrantUserProvider
 {
     /**
-     * Resolves user by given provider and access token.
+     * Retrieve a user by provider and access token.
      *
      * @param string $provider
      * @param string $accessToken

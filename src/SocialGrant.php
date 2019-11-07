@@ -18,7 +18,7 @@ class SocialGrant extends AbstractGrant
 {
     private $resolver;
 
-    public function __construct(SocialGrantUserResolver $resolver, RefreshTokenRepositoryInterface $refreshTokenRepository)
+    public function __construct(SocialGrantUserProvider $resolver, RefreshTokenRepositoryInterface $refreshTokenRepository)
     {
         $this->resolver = $resolver;
         $this->setRefreshTokenRepository($refreshTokenRepository);
