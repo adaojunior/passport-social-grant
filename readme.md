@@ -1,6 +1,6 @@
 # Social Grant for Laravel Passport
 
-This package adds a social grant to your Laravel Passport based Oauth2 Server.
+This package adds a social grant to your Oauth2 Server.
 
 ## Installation
 
@@ -26,7 +26,7 @@ The package will automatically register its service provider. Or you may manuall
 ```php
 
 <?php
-namespace App\Resolvers;
+namespace App\SocialGrant;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -39,4 +39,15 @@ class UserProvider implements SocialGrantUserProvider
 
     }
 }
+```
+
+2. Bind `SocialGrantUserProvider` interface to your implementation in the `register` method of your application service provider `app/Providers/AppServiceProvider.php`:
+
+```php
+
+$this->app->bind(
+    Adaojunior\PassportSocialGrant\SocialGrantUserProvider::class,
+    App\SocialGrant\UserProvider::class
+);
+
 ```
