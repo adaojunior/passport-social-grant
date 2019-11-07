@@ -28,13 +28,13 @@ The package will automatically register its service provider. Or you may manuall
 <?php
 namespace App\Resolvers;
 
-use League\OAuth2\Server\Entities\UserEntityInterface;
+use Illuminate\Contracts\Auth\Authenticatable;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Adaojunior\PassportSocialGrant\SocialGrantUserProvider;
 
 class SocialUserResolver implements SocialGrantUserProvider
 {
-    public function getUserEntityByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? UserEntityInterface
+    public function getUserByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? Authenticatable
     {
 
     }
