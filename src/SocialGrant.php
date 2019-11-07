@@ -16,12 +16,11 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class SocialGrant extends AbstractGrant
 {
-    const CODE = 'code';
+    private $resolver;
 
-    const ACCESS_TOKEN = 'access_token';
-
-    public function __construct(RefreshTokenRepositoryInterface $refreshTokenRepository)
+    public function __construct(SocialGrantAccessTokenResolver $resolver, RefreshTokenRepositoryInterface $refreshTokenRepository)
     {
+        $this->resolver = $resolver;
         $this->setRefreshTokenRepository($refreshTokenRepository);
         $this->refreshTokenTTL = new DateInterval('P1M');
     }
@@ -71,11 +70,9 @@ class SocialGrant extends AbstractGrant
      */
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
-        $type = $this->getType($request);
-
-        $user = $this->getResolver($type)->resolve(
+        $user = $this->resolver->resolve(
             $this->getParameter('network', $request),
-            $this->getParameter($type, $request),
+            $this->getParameter('access_token', $request),
             $client
         );
 
@@ -89,46 +86,6 @@ class SocialGrant extends AbstractGrant
         }
 
         return $user;
-    }
-
-    /**
-     * @param string $type
-     * @return SocialGrantCodeResolver|SocialGrantAccessTokenResolver
-     */
-    protected function getResolver(string $type)
-    {
-        $class = config("social-grant.$type");
-
-        $resolver = app($class);
-
-        if ($type === self::CODE && $resolver instanceof SocialGrantCodeResolver) {
-            return $resolver;
-        } elseif ($type === self::ACCESS_TOKEN && $resolver instanceof SocialGrantAccessTokenResolver) {
-            return $resolver;
-        }
-
-        throw SocialGrantException::serverError("Missing implementation of $type");
-    }
-
-    protected function getType(ServerRequestInterface $request)
-    {
-        $type = $this->getParameter('type', $request);
-
-        if ($this->isValidType($type) && $this->isTypeEnabled($type)) {
-            return $type;
-        }
-
-        throw SocialGrantException::invalidType($type);
-    }
-
-    protected function isTypeEnabled(string $type)
-    {
-        return ! is_null(config("social-grant.$type"));
-    }
-
-    public function isValidType($type)
-    {
-        return in_array($type, [self::CODE, self::ACCESS_TOKEN]);
     }
 
     protected function getParameter($param, ServerRequestInterface $request, $required = true)

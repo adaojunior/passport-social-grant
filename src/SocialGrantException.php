@@ -15,9 +15,4 @@ class SocialGrantException extends OAuthServerException
     {
         return self::invalidRequest('access_token', 'Invalid access token');
     }
-
-    public static function invalidType(string $type)
-    {
-        return self::invalidRequest('type', "Type '$type' is not allowed");
-    }
 }
