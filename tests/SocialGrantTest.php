@@ -21,6 +21,7 @@ use Adaojunior\Passport\SocialGrant;
 use Adaojunior\Passport\SocialGrantUserResolver;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Zend\Diactoros\ServerRequest;
+use League\OAuth2\Server\Exception\OAuthServerException;
 
 class SocialGrantTest extends TestCase
 {
@@ -125,7 +126,7 @@ class SocialGrantTest extends TestCase
             'client_secret' => 'bar',
         ]);
         $responseType = new StubResponseType();
-        $this->expectException(\League\OAuth2\Server\Exception\OAuthServerException::class);
+        $this->expectException(OAuthServerException::class);
         $grant->respondToAccessTokenRequest($serverRequest, $responseType, new DateInterval('PT5M'));
     }
 
@@ -146,7 +147,7 @@ class SocialGrantTest extends TestCase
             'provider'      => 'foo',
         ]);
         $responseType = new StubResponseType();
-        $this->expectException(\League\OAuth2\Server\Exception\OAuthServerException::class);
+        $this->expectException(OAuthServerException::class);
         $grant->respondToAccessTokenRequest($serverRequest, $responseType, new DateInterval('PT5M'));
     }
 
@@ -169,7 +170,7 @@ class SocialGrantTest extends TestCase
             'access_token'  => 'barx',
         ]);
         $responseType = new StubResponseType();
-        $this->expectException(\League\OAuth2\Server\Exception\OAuthServerException::class);
+        $this->expectException(OAuthServerException::class);
         $this->expectExceptionCode(10);
         $grant->respondToAccessTokenRequest($serverRequest, $responseType, new DateInterval('PT5M'));
     }
