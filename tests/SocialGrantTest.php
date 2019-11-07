@@ -1,27 +1,26 @@
 <?php
 
-
 namespace Adaojunior\SocialGrant\Tests;
 
-use DateInterval;
+use Adaojunior\Passport\SocialGrant;
+use Adaojunior\Passport\SocialGrantUserResolver;
 use Adaojunior\SocialGrant\Tests\Stubs\AccessTokenEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\ClientEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\RefreshTokenEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\ScopeEntity;
 use Adaojunior\SocialGrant\Tests\Stubs\StubResponseType;
 use Adaojunior\SocialGrant\Tests\Stubs\UserEntity;
+use DateInterval;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
+use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 use PHPUnit\Framework\TestCase;
-use Adaojunior\Passport\SocialGrant;
-use Adaojunior\Passport\SocialGrantUserResolver;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Zend\Diactoros\ServerRequest;
-use League\OAuth2\Server\Exception\OAuthServerException;
 
 class SocialGrantTest extends TestCase
 {
@@ -60,7 +59,7 @@ class SocialGrantTest extends TestCase
         $grant->setAccessTokenRepository($accessTokenRepositoryMock);
         $grant->setScopeRepository($scopeRepositoryMock);
         $grant->setDefaultScope(self::DEFAULT_SCOPE);
-        $grant->setPrivateKey(new CryptKey('file://' . __DIR__ . '/Stubs/private.key'));
+        $grant->setPrivateKey(new CryptKey('file://'.__DIR__.'/Stubs/private.key'));
         $serverRequest = (new ServerRequest())->withParsedBody([
             'client_id'     => 'foo',
             'client_secret' => 'bar',
@@ -97,7 +96,7 @@ class SocialGrantTest extends TestCase
         $grant->setAccessTokenRepository($accessTokenRepositoryMock);
         $grant->setScopeRepository($scopeRepositoryMock);
         $grant->setDefaultScope(self::DEFAULT_SCOPE);
-        $grant->setPrivateKey(new CryptKey('file://' . __DIR__ . '/Stubs/private.key'));
+        $grant->setPrivateKey(new CryptKey('file://'.__DIR__.'/Stubs/private.key'));
         $serverRequest = (new ServerRequest())->withParsedBody([
             'client_id'     => 'foo',
             'client_secret' => 'bar',
