@@ -28,6 +28,7 @@ The package will automatically register its service provider. Or you may manuall
 
 namespace App\SocialGrant;
 
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Contracts\Auth\Authenticatable;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Adaojunior\PassportSocialGrant\SocialGrantUserProvider;
