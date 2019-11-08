@@ -57,3 +57,18 @@ $this->app->bind(
     App\SocialGrant\UserProvider::class
 );
 ```
+
+## Usage
+
+
+```php
+$response = $http->post('http://your.app/oauth/token', [
+    'form_params' => [
+        'grant_type' => 'social',
+        'client_id' => $clientId,
+        'client_secret' => $clientSecret,
+        'provider' => $providerName, // name of provider (e.g., 'facebook', 'google' etc.)
+        'access_token' => $providerAccessToken, // access token issued by specified provider
+    ],
+]);
+```
