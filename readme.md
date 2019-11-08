@@ -34,6 +34,14 @@ use Adaojunior\PassportSocialGrant\SocialGrantUserProvider;
 
 class UserProvider implements SocialGrantUserProvider
 {
+    /**
+     * Retrieve a user by provider and access token.
+     *
+     * @param string $provider
+     * @param string $accessToken
+     * @param ClientEntityInterface $client
+     * @return Authenticatable|null
+     */
     public function getUserByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? Authenticatable
     {
 
