@@ -5,7 +5,6 @@ namespace Adaojunior\SocialGrant\Tests\Stubs;
 use Illuminate\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-
 class UserEntity implements Authenticatable
 {
     use Auth\Authenticatable;
