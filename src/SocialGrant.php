@@ -1,9 +1,11 @@
 <?php
 
-namespace Adaojunior\Passport;
+namespace Adaojunior\PassportSocialGrant;
 
+use DateInterval;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Passport\Bridge\User as UserEntity;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
@@ -14,16 +16,13 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class SocialGrant extends AbstractGrant
 {
-    /** @var  SocialUserResolverInterface */
-    protected $resolver;
+    private $provider;
 
-    public function __construct(
-        SocialUserResolverInterface $resolver,
-        RefreshTokenRepositoryInterface $refreshTokenRepository
-    ) {
-        $this->resolver = $resolver;
+    public function __construct(SocialGrantUserProvider $provider, RefreshTokenRepositoryInterface $refreshTokenRepository)
+    {
+        $this->provider = $provider;
         $this->setRefreshTokenRepository($refreshTokenRepository);
-        $this->refreshTokenTTL = new \DateInterval('P1M');
+        $this->refreshTokenTTL = new DateInterval('P1M');
     }
 
     public function getIdentifier()
@@ -31,60 +30,79 @@ class SocialGrant extends AbstractGrant
         return 'social';
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseTypeInterface $responseType
+     * @param DateInterval $accessTokenTTL
+     * @return ResponseTypeInterface
+     * @throws OAuthServerException
+     * @throws \League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException
+     */
     public function respondToAccessTokenRequest(
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
-        \DateInterval $accessTokenTTL
+        DateInterval $accessTokenTTL
     ) {
 
         // Validate request
         $client = $this->validateClient($request);
 
-        $scopes = $this->validateScopes($this->getRequestParameter('scope', $request));
+        $scopes = $this->validateScopes($this->getRequestParameter('scope', $request), $this->defaultScope);
 
-        $user = $this->validateUser($request);
+        $user = $this->validateUser($request, $client);
 
         // Finalize the requested scopes
-        $scopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier());
+        $finalizedScopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier());
 
-        // Issue and persist new tokens
-        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $user->getIdentifier(), $scopes);
+        // Issue and persist new access token
+        $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $user->getIdentifier(), $finalizedScopes);
+        $this->getEmitter()->emit(new RequestEvent(RequestEvent::ACCESS_TOKEN_ISSUED, $request));
+        $responseType->setAccessToken($accessToken);
 
+        // Issue and persist new refresh token if given
         $refreshToken = $this->issueRefreshToken($accessToken);
 
-        // Inject tokens into response
-        $responseType->setAccessToken($accessToken);
-        $responseType->setRefreshToken($refreshToken);
+        if ($refreshToken !== null) {
+            $this->getEmitter()->emit(new RequestEvent(RequestEvent::REFRESH_TOKEN_ISSUED, $request));
+            $responseType->setRefreshToken($refreshToken);
+        }
 
         return $responseType;
     }
 
     /**
      * @param ServerRequestInterface $request
+     * @param ClientEntityInterface $client
      * @return UserEntityInterface
      * @throws OAuthServerException
      */
-    protected function validateUser(ServerRequestInterface $request)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
-        $user = $this->resolver->resolve(
-            $this->getParameter('network', $request),
+        $user = $this->provider->getUserByAccessToken(
+            $this->getParameter('provider', $request),
             $this->getParameter('access_token', $request),
-            $this->getParameter('access_token_secret', $request, false)
+            $client
         );
 
-        if($user instanceof Authenticatable)
-        {
+        if ($user instanceof Authenticatable) {
             $user = new UserEntity($user->getAuthIdentifier());
         }
 
         if ($user instanceof UserEntityInterface === false) {
             $this->getEmitter()->emit(new RequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
-            throw OAuthServerException::invalidCredentials();
+            throw OAuthServerException::invalidGrant();
         }
 
         return $user;
     }
 
+    /**
+     * @param $param
+     * @param ServerRequestInterface $request
+     * @param bool $required
+     * @return string|null
+     * @throws OAuthServerException
+     */
     protected function getParameter($param, ServerRequestInterface $request, $required = true)
     {
         $value = $this->getRequestParameter($param, $request);

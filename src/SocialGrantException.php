@@ -1,18 +1,18 @@
 <?php
 
-namespace Adaojunior\Passport;
+namespace Adaojunior\PassportSocialGrant;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
 
 class SocialGrantException extends OAuthServerException
 {
-    public static function invalidNetwork()
+    public static function invalidProvider()
     {
-        return self::invalidRequest('network', "Invalid network");
+        return self::invalidRequest('provider', 'Invalid provider');
     }
 
     public static function invalidAccessToken()
     {
-        return self::invalidRequest('access_token', "Invalid access token");
+        return self::invalidRequest('access_token', 'Invalid access token');
     }
 }

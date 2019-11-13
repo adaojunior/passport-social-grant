@@ -1,6 +1,6 @@
 <?php
 
-namespace Adaojunior\Passport;
+namespace Adaojunior\PassportSocialGrant;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
@@ -11,7 +11,7 @@ class SocialGrantServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        app()->afterResolving(AuthorizationServer::class, function(AuthorizationServer $server) {
+        $this->app->resolving(AuthorizationServer::class, function (AuthorizationServer $server) {
             $grant = $this->makeGrant();
             $server->enableGrantType($grant, Passport::tokensExpireIn());
         });
@@ -20,7 +20,7 @@ class SocialGrantServiceProvider extends ServiceProvider
     protected function makeGrant()
     {
         $grant = new SocialGrant(
-            $this->app->make(SocialUserResolverInterface::class),
+            $this->app->make(SocialGrantUserProvider::class),
             $this->app->make(RefreshTokenRepository::class)
         );
 
