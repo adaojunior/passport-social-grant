@@ -14,4 +14,5 @@ install:
   - travis_retry composer install --no-interaction --prefer-source
 
 script:
+  - chmod 600 tests/Stubs/private.key
   - composer test
