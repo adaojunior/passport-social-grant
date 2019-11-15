@@ -1,6 +1,6 @@
 {
     "name": "adaojunior/passport-social-grant",
-    "description": "Social guard for Laravel Passport",
+    "description": "Social grant for Laravel Passport",
     "type": "library",
     "keywords": [
         "oauth",
@@ -14,7 +14,7 @@
     "authors": [
         {
             "name": "Adão Júnior",
-            "email": "itsjunnior@gmail.com",
+            "email": "dev@pardim.com",
             "homepage": "https://github.com/adaojunior",
             "role": "Developer"
         }
@@ -24,9 +24,20 @@
             "Adaojunior\\Passport\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Adaojunior\\Passport\\Tests\\": "tests/"
+        }
+    },
     "require": {
-        "php": ">=5.6.4",
-        "laravel/passport": "^2.0|^3.0|^4.0|^5.0|^6.0|^7.0"
+        "php": "^7.2",
+        "laravel/passport": "^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.4"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --colors=always"
     },
     "extra": {
         "laravel": {
