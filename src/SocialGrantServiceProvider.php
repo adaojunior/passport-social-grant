@@ -11,7 +11,7 @@ class SocialGrantServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        app()->afterResolving(AuthorizationServer::class, function(AuthorizationServer $server) {
+        app()->afterResolving(AuthorizationServer::class, function (AuthorizationServer $server) {
             $grant = $this->makeGrant();
             $server->enableGrantType($grant, Passport::tokensExpireIn());
         });

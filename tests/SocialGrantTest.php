@@ -63,7 +63,7 @@ class SocialGrantTest extends TestCase
         $serverRequest = (new ServerRequest())->withParsedBody([
             'client_id'     => 'foo',
             'client_secret' => 'bar',
-            'network'      => 'foo',
+            'network'       => 'foo',
             'access_token'  => 'bar',
         ]);
 
@@ -100,7 +100,7 @@ class SocialGrantTest extends TestCase
         $serverRequest = (new ServerRequest())->withParsedBody([
             'client_id'     => 'foo',
             'client_secret' => 'bar',
-            'network'      => 'foo',
+            'network'       => 'foo',
             'access_token'  => 'bar',
         ]);
         $responseType = new StubResponseType();
@@ -143,7 +143,7 @@ class SocialGrantTest extends TestCase
         $serverRequest = (new ServerRequest())->withParsedBody([
             'client_id'     => 'foo',
             'client_secret' => 'bar',
-            'network'      => 'foo',
+            'network'       => 'foo',
         ]);
         $responseType = new StubResponseType();
         $this->expectException(OAuthServerException::class);
@@ -163,9 +163,9 @@ class SocialGrantTest extends TestCase
         $grant->setClientRepository($clientRepositoryMock);
         $grant->setAccessTokenRepository($accessTokenRepositoryMock);
         $serverRequest = (new ServerRequest())->withParsedBody([
-            'client_id' => 'foo',
+            'client_id'     => 'foo',
             'client_secret' => 'bar',
-            'network'      => 'foo',
+            'network'       => 'foo',
             'access_token'  => 'barx',
         ]);
         $responseType = new StubResponseType();
