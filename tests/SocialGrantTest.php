@@ -74,7 +74,6 @@ class SocialGrantTest extends TestCase
         $this->assertInstanceOf(RefreshTokenEntityInterface::class, $responseType->getRefreshToken());
     }
 
-    /**
     public function testRespondToRequestNullRefreshToken()
     {
         $client = new ClientEntity();
@@ -109,7 +108,6 @@ class SocialGrantTest extends TestCase
         $this->assertInstanceOf(AccessTokenEntityInterface::class, $responseType->getAccessToken());
         $this->assertNull($responseType->getRefreshToken());
     }
-    **/
 
     public function testRespondToRequestMissingProvider()
     {
