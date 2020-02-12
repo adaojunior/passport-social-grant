@@ -18,11 +18,18 @@ class SocialGrant extends AbstractGrant
 {
     private $provider;
 
+    private static $providerParamName = 'provider';
+
     public function __construct(SocialGrantUserProvider $provider, RefreshTokenRepositoryInterface $refreshTokenRepository)
     {
         $this->provider = $provider;
         $this->setRefreshTokenRepository($refreshTokenRepository);
         $this->refreshTokenTTL = new DateInterval('P1M');
+    }
+
+    public static function useNetworkInsteadOfProvider(bool $value = true)
+    {
+        self::$providerParamName = $value ? 'network' : 'provider';
     }
 
     public function getIdentifier()
@@ -79,7 +86,7 @@ class SocialGrant extends AbstractGrant
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
         $user = $this->provider->getUserByAccessToken(
-            $this->getParameter('provider', $request),
+            $this->getParameter(self::$providerParamName, $request),
             $this->getParameter('access_token', $request),
             $client
         );
