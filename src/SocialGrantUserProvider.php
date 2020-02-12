@@ -15,5 +15,5 @@ interface SocialGrantUserProvider
      * @param ClientEntityInterface $client
      * @return Authenticatable|null
      */
-    public function getUserByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client):? Authenticatable;
+    public function getUserByAccessToken(string $provider, string $accessToken, ClientEntityInterface $client): ?Authenticatable;
 }
