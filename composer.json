@@ -1,5 +1,5 @@
 {
-    "name": "adaojunior/passport-social-grant",
+    "name": "atari/passport-social-grant",
     "description": "Social grant for Laravel Passport",
     "type": "library",
     "keywords": [
