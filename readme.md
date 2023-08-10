@@ -15,7 +15,7 @@ The package will automatically register its service provider. Or you may manuall
 ```php
 'providers' => [
     // ...
-    Adaojunior\PassportSocialGrant\SocialGrantServiceProvider::class,
+    Adaojunior\Passport\SocialGrantServiceProvider::class,
 ];
 ```
 
