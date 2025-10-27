@@ -32,7 +32,7 @@ class SocialGrant extends AbstractGrant
         self::$providerParamName = $value ? 'network' : 'provider';
     }
 
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'social';
     }
@@ -49,7 +49,7 @@ class SocialGrant extends AbstractGrant
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
-    ) {
+    ): ResponseTypeInterface {
 
         // Validate request
         $client = $this->validateClient($request);
@@ -83,7 +83,7 @@ class SocialGrant extends AbstractGrant
      * @return UserEntityInterface
      * @throws OAuthServerException
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client): UserEntityInterface
     {
         $user = $this->provider->getUserByAccessToken(
             $this->getParameter(self::$providerParamName, $request),
